@@ -45,10 +45,10 @@
                     </button>
 
                     <div class="download-group">
-                        <select id="layout-select" class="btn btn-secondary select-layout">
-                            <option value="portrait">直式佈局</option>
-                            <option value="landscape">橫式佈局</option>
-                        </select>
+                        <div class="layout-toggle">
+                            <button class="layout-btn active" data-layout="portrait">直式</button>
+                            <button class="layout-btn" data-layout="landscape">橫式</button>
+                        </div>
                         <button id="btn-download" class="btn btn-accent" disabled>
                             <span class="icon">💾</span> 下載
                         </button>
@@ -72,6 +72,10 @@
     <!-- Hidden canvas for processing -->
     <canvas id="capture-canvas" style="display: none;"></canvas>
     <canvas id="combine-canvas" style="display: none;"></canvas>
+
+    <a href="../index.html" class="floating-home-btn" title="回首頁">
+        <span class="icon">🏠</span>
+    </a>
 
     <script src="script.js"></script>
 </body>

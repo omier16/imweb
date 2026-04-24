@@ -209,14 +209,31 @@ header {
     gap: 0.5rem;
 }
 
-.select-layout {
-    appearance: none;
-    -webkit-appearance: none;
-    padding-right: 2.5rem;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 0.8rem center;
-    background-size: 1rem;
+.layout-toggle {
+    display: flex;
+    background: var(--card-bg);
+    border-radius: 14px;
+    padding: 4px;
+    border: 1px solid var(--glass-border);
+    gap: 4px;
+}
+
+.layout-btn {
+    padding: 8px 16px;
+    border-radius: 10px;
+    border: none;
+    background: transparent;
+    color: var(--text-dim);
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.layout-btn.active {
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 0 15px var(--primary-glow);
 }
 
 .gallery-section {
@@ -289,4 +306,46 @@ footer {
     .glow-text { font-size: 2rem; }
     .controls { flex-direction: column; width: 100%; }
     .btn { width: 100%; justify-content: center; }
+}
+
+.floating-home-btn {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    box-shadow: 0 10px 25px var(--primary-glow);
+    z-index: 1000;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.floating-home-btn .icon {
+    font-size: 1.5rem;
+    transition: transform 0.3s ease;
+}
+
+.floating-home-btn:hover {
+    transform: scale(1.1) translateY(-5px);
+    box-shadow: 0 15px 30px var(--primary-glow);
+    filter: brightness(1.2);
+}
+
+.floating-home-btn:hover .icon {
+    transform: scale(1.2);
+}
+
+@media (max-width: 600px) {
+    .floating-home-btn {
+        bottom: 1.5rem;
+        right: 1.5rem;
+        width: 50px;
+        height: 50px;
+    }
 }

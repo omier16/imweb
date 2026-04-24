@@ -6,7 +6,7 @@ const countdownOverlay = document.getElementById('countdown-overlay');
 const flashOverlay = document.getElementById('flash-overlay');
 const gallery = document.getElementById('photo-gallery');
 const filterBtns = document.querySelectorAll('.filter-btn');
-const layoutSelect = document.getElementById('layout-select');
+const layoutBtns = document.querySelectorAll('.layout-btn');
 const captureCanvas = document.getElementById('capture-canvas');
 const combineCanvas = document.getElementById('combine-canvas');
 
@@ -41,6 +41,16 @@ filterBtns.forEach(btn => {
         // Update video preview
         currentFilter = btn.dataset.filter;
         video.style.filter = currentFilter === 'none' ? '' : currentFilter;
+    });
+});
+
+// 1.2 Handle Layout Toggle
+let currentLayout = 'portrait';
+layoutBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        layoutBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentLayout = btn.dataset.layout;
     });
 });
 
@@ -105,7 +115,7 @@ btnDownload.addEventListener('click', () => {
     if (capturedPhotos.length < 3) return;
 
     const ctx = combineCanvas.getContext('2d');
-    const layout = layoutSelect.value;
+    const layout = currentLayout;
     
     const photoWidth = 800; // Reference width
     const photoHeight = (photoWidth * video.videoHeight) / video.videoWidth;
@@ -147,18 +157,23 @@ btnDownload.addEventListener('click', () => {
 
 function renderMetadata(ctx, yOffset, width, height) {
     ctx.fillStyle = '#000000';
-    ctx.font = 'bold 24px "Noto Sans TC", sans-serif';
+    
+    // Scale font size based on width
+    const baseFontSize = width > 1000 ? 48 : 24;
+    const subFontSize = width > 1000 ? 36 : 18;
+    
+    ctx.font = `bold ${baseFontSize}px "Noto Sans TC", sans-serif`;
     ctx.textAlign = 'center';
     
     const now = new Date();
     const dateStr = now.toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric' });
     const timeStr = now.toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit' });
 
-    ctx.fillText('相片亭 - 三連拍紀錄', width / 2, yOffset + 50);
+    ctx.fillText('相片亭 - 三連拍紀錄', width / 2, yOffset + (height * 0.4));
     
-    ctx.font = '300 18px "Noto Sans TC", sans-serif';
+    ctx.font = `300 ${subFontSize}px "Noto Sans TC", sans-serif`;
     ctx.fillStyle = '#666666';
-    ctx.fillText(`${dateStr} ${timeStr} | Created with 相片亭 App`, width / 2, yOffset + 85);
+    ctx.fillText(`${dateStr} ${timeStr} | Created with 相片亭 App`, width / 2, yOffset + (height * 0.7));
 }
 
 function triggerDownload() {
